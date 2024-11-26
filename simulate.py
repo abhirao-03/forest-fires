@@ -7,13 +7,12 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 
 o, p = 100, 100
 grid = np.load('imaging/processed.npy')
-grid = grid[-100:, :p]
-
+grid = grid[500:700, 0:200]
 
 alpha_responder = planes(10, 0)
 
 M, count_down = start_fire_grid(grid)
-species = np.zeros((o, p))
+species = np.zeros(shape=grid.shape)
 burning_time = [3]
 growing_time = [50]
 
