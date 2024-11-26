@@ -5,9 +5,9 @@ from plane import *
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
-o, p = 150, 150
+o, p = 100, 100
 grid = np.load('imaging/processed.npy')
-grid = grid[:o, :p]
+grid = grid[-100:, :p]
 
 
 alpha_responder = planes(10, 0)
