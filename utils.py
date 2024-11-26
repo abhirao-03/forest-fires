@@ -102,7 +102,7 @@ def if_burning_around(M,i,j,wind_dir): #simplest
     if tmp==1 : return True
     else: return False
 
-def update(M,count_down,species,burning_time = 10,growing_time = 50,wind_dir=[0,0]):
+def update(M, count_down,density,burning_time = 10, growing_time = 50,wind_dir=[0,0]):
     m = np.size(M,0) #size
     n = np.size(M,1)
     M_copy = np.zeros([m,n])
@@ -115,8 +115,7 @@ def update(M,count_down,species,burning_time = 10,growing_time = 50,wind_dir=[0,
             if(M[i,j]==0): #flammable
                 if(if_burning_around(M,i,j,wind_dir)):
                     M_copy[i,j] = 3
-                    #count_down_copy[i,j] = burning_time*density[i,j]
-                    count_down_copy[i,j] = burning_time[int(species[i,j])]
+                    count_down_copy[i,j] = burning_time*density[i,j]
             elif(M[i,j]==3 and count_down_copy[i,j]==0):#burning
                 #burnt time reached     
                 M_copy[i,j] = 2 #burnt
@@ -124,8 +123,7 @@ def update(M,count_down,species,burning_time = 10,growing_time = 50,wind_dir=[0,
                 M_copy[i,j] = 3
             elif(M[i,j]==2): #burnt
                 M_copy[i,j] = 1 #growing
-                #count_down_copy[i,j] = np.random.randint(growing_time-10,growing_time+10)
-                count_down_copy[i,j] = growing_time[int(species[i,j])]
+                count_down_copy[i,j] = np.random.randint(growing_time-10,growing_time+10)
             elif(M[i,j]==1 and count_down_copy[i,j]==0): 
                 M_copy[i,j] = 0 #flammable
             elif(M[i,j]==1 and count_down_copy[i,j]!=0): 

@@ -34,7 +34,7 @@ responder_marker, = ax.plot(alpha_responder.y, alpha_responder.x, 'bo', markersi
 # Animation update function
 def animate(frame):
     global M, count_down
-    M, count_down = update(M, count_down, burning_time=2, wind_dir=[1, -1])
+    M, count_down = update(M, count_down, density, burning_time=2, wind_dir=[1, -1])
 
     alpha_responder.move(M)
     alpha_responder.extinguish(M)
