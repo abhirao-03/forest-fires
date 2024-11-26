@@ -60,8 +60,8 @@ def burning_prob(wind_dir): #[0,1] from south [1,0] from east
     for i in range(6):
         if distance[i]>np.pi:
             distance[i] = 2*np.pi - distance[i]
-        prob[i] = random.uniform(1-distance[i]/np.pi,1)
-        #prob[i] = random.uniform(1-np.sin(distance[i]/2),1)
+        #prob[i] = random.uniform(1-distance[i]/np.pi,1)
+        prob[i] = random.uniform(1-np.sin(distance[i]/2),1)
     
     return prob
 
@@ -102,11 +102,12 @@ def if_burning_around(M,i,j,wind_dir): #simplest
     if tmp==1 : return True
     else: return False
 
-def update(M, count_down,density,burning_time = 10, growing_time = 50,wind_dir=[0,0]):
+def update(M,count_down,species,burning_time,growing_time,wind_dir=[0,0]):
     m = np.size(M,0) #size
     n = np.size(M,1)
     M_copy = np.zeros([m,n])
     M_copy[M==-1] = -1
+    M_copy[M==4] = 4
     count_down_copy = count_down
     for i in np.arange(m):
         for j in np.arange(n):
@@ -115,7 +116,8 @@ def update(M, count_down,density,burning_time = 10, growing_time = 50,wind_dir=[
             if(M[i,j]==0): #flammable
                 if(if_burning_around(M,i,j,wind_dir)):
                     M_copy[i,j] = 3
-                    count_down_copy[i,j] = burning_time*density[i,j]
+                    #count_down_copy[i,j] = burning_time*density[i,j]
+                    count_down_copy[i,j] = burning_time[int(species[i,j])]
             elif(M[i,j]==3 and count_down_copy[i,j]==0):#burning
                 #burnt time reached     
                 M_copy[i,j] = 2 #burnt
@@ -123,24 +125,13 @@ def update(M, count_down,density,burning_time = 10, growing_time = 50,wind_dir=[
                 M_copy[i,j] = 3
             elif(M[i,j]==2): #burnt
                 M_copy[i,j] = 1 #growing
-                count_down_copy[i,j] = np.random.randint(growing_time-10,growing_time+10)
+                #count_down_copy[i,j] = np.random.randint(growing_time-10,growing_time+10)
+                count_down_copy[i,j] = growing_time[int(species[i,j])]
             elif(M[i,j]==1 and count_down_copy[i,j]==0): 
                 M_copy[i,j] = 0 #flammable
             elif(M[i,j]==1 and count_down_copy[i,j]!=0): 
                 M_copy[i,j] = 1 
     return M_copy,count_down_copy
-
-def colormap(value):
-    if(value==-1):
-        return 'black'
-    elif(value==0):
-        return 'y'
-    elif(value==1):
-        return 'g'
-    elif(value==2):
-        return 'b'
-    elif(value==3):
-        return 'r'
 
 def plot_M(M,ax):
     ax.axis('off')
