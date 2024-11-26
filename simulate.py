@@ -5,7 +5,7 @@ from plane import *
 from matplotlib.animation import FuncAnimation
 
 grid = np.load('imaging/processed.npy')
-grid = grid[:250, :250]
+grid = grid[:100, :100]
 
 
 alpha_responder = planes(40, 60)
@@ -29,7 +29,7 @@ fig, ax = plt.subplots()
 ax.set_title("Fire Simulation")
 img = ax.imshow(M, cmap='hot', interpolation='nearest')
 
-responder_marker, = ax.plot(alpha_responder.x, alpha_responder.y, 'bo', markersize=8, label="Responder")
+responder_marker, = ax.plot(alpha_responder.y, alpha_responder.x, 'bo', markersize=8, label="Responder")
 
 # Animation update function
 def animate(frame):
@@ -40,7 +40,7 @@ def animate(frame):
     alpha_responder.extinguish(M)
 
     img.set_data(M)
-    responder_marker.set_data(alpha_responder.x, alpha_responder.y)
+    responder_marker.set_data(alpha_responder.y, alpha_responder.x)
 
     return [img, responder_marker]
 
@@ -49,4 +49,5 @@ N = 100  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=100, blit=True)
 
 # Show the animation
+plt.legend()
 plt.show()
