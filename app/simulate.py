@@ -4,6 +4,8 @@ from utils import update, start_fire_grid
 from plane import *
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap, BoundaryNorm
+from perlin_noise.perlin_noise import PerlinNoise
+
 
 o, p = 100, 100
 grid = np.load('imaging/processed.npy')
