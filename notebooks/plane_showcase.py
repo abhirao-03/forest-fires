@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import plane
+import app.plane as plane
 
 grid = np.load('planes/testing/M_tracked.npy')  # bring in our tracked grid of fire.
 

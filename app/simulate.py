@@ -7,7 +7,6 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 
 o, p = 100, 100
 grid = np.load('imaging/processed.npy')
-grid = grid[500:700, 0:200]
 
 alpha_responder = planes(10, 0)
 
@@ -28,11 +27,9 @@ fig, ax = plt.subplots()
 artists = []
 N = 100
 
-
 cmap = ListedColormap([ 'blue', 'darkgreen', 'darkseagreen', 'grey', 'red', 'thistle'])
 boundaries = [-1.1, -0.5, 0.5, 1.1, 2.1, 3.1, 4.1]  # Boundaries to separate the color intervals
 norm = BoundaryNorm(boundaries, cmap.N)  # Use norm to map boundaries to cmap indices
-
 
 # Setup plot
 fig, ax = plt.subplots()

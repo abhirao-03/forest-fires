@@ -4,14 +4,9 @@ import random
 import scipy
 import PIL
 
-def start_fire(m,n,p=0.001,burning_time=10): #width,height,prob
-    M = np.zeros([m,n])
-    count_down = np.zeros([m,n])
-    M_p = np.random.rand(m,n)
-    M[M_p>(1-p)] = 3
-    count_down[M_p>(1-p)] = burning_time
-    return M,count_down
-
+# -----------------------------------------------------------------------------------------------------------
+# JiaSun FUNCTIONS
+# -----------------------------------------------------------------------------------------------------------
 
 def start_fire_grid(grid,p=0.0001,burning_time=10):
     m = np.size(grid, 0)
@@ -167,7 +162,9 @@ def wind(i,N):
     theta = np.pi/N*i
     return [50*np.cos(theta),50*np.sin(theta)]
 
-
+# -----------------------------------------------------------------------------------------------------------
+# Willow FUNCTIONS
+# -----------------------------------------------------------------------------------------------------------
 
 
 def get_cell(board, row, col):
@@ -189,8 +186,10 @@ def set_cell(board, row, col, value):
     return board
 
 
-
-
+# -----------------------------------------------------------------------------------------------------------
+# Facets of Mathematics FUNCTIONS
+# -----------------------------------------------------------------------------------------------------------
+ 
 def _img_a_cast(img_a, dtype, true_color=False):
     """
     This function checks and corrects for any errors in our image format.
@@ -223,6 +222,7 @@ def _img_a_cast(img_a, dtype, true_color=False):
             raise RuntimeError("Unexpected image type")
         return img_a
 
+
 def linear_filter(img_a, W, **kwargs):
     """
     Applies a convolution with a kernel W to the supplied image
@@ -247,3 +247,26 @@ def imwrite(fp, img_a, **kwargs):
     img_a = _img_a_cast(img_a, dtype=np.uint8)
     img = PIL.Image.fromarray(img_a)
     img.save(fp, **kwargs)
+
+
+# -----------------------------------------------------------------------------------------------------------
+# ALTERNATE SOURCE FUNCTIONS
+# -----------------------------------------------------------------------------------------------------------
+
+def bin_array_to_shape(arr, target_shape):
+    """
+    https://stackoverflow.com/questions/36063658/how-to-bin-a-2d-array-in-numpy
+    https://scipython.com/blog/binning-a-2d-array-in-numpy/
+    """
+    target_rows, target_cols = target_shape
+    input_rows, input_cols = arr.shape
+
+    # Compute binning factors
+    row_factor = input_rows // target_rows
+    col_factor = input_cols // target_cols
+
+    # Bin the array using reshaping and mean
+    binned = arr[:row_factor * target_rows, :col_factor * target_cols]  # Crop to exact multiples
+    binned = binned.reshape(target_rows, row_factor, target_cols, col_factor).mean(axis=(1, 3))
+
+    return binned

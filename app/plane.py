@@ -19,7 +19,7 @@ class planes():
         helper_move, move                       movement of plane.
     """
 
-    def __init__(self, x: int, y: int, radius:int = 4, speed:float = 5.0):
+    def __init__(self, x: int, y: int, radius:int = 4, speed:float = 10.0):
         self.x = x
         self.y = y
         self.speed = speed
@@ -39,7 +39,7 @@ class planes():
             points = []
             for x in range(-radius, radius + 1):
                 for y in range(-radius, radius + 1):
-                    if abs(x) + abs(y) <= radius:  # Manhattan distance condition
+                    if abs(x) + abs(y) <= radius:
                         points.append((x, y))
             return points
 
@@ -103,11 +103,13 @@ class planes():
 
     def helper_move(self, target: np.array):
         # given a target, find the magnitude and direction
-        _, dir = self.norm_target_direction(target)
+        mag, dir = self.norm_target_direction(target)
+        
+        effective_speed = min(self.speed, mag)
 
         # find x, y distance update components based on speed.
-        dx = dir[0] * self.speed
-        dy = dir[1] * self.speed
+        dx = dir[0] * (effective_speed+1)
+        dy = dir[1] * (effective_speed+1)
 
         # force integer values since we're plotting on a grid.
         self.x = int(self.x + dx)
@@ -116,5 +118,10 @@ class planes():
     def move(self, grid):
         # Meant purely for cleanliness of code. I.e. take in a grid and run `helper_move()` with acceptable inputs.
         locs = self.get_min_distance_cell_from_cluster(grid)
-        target = locs[0]
-        self.helper_move(target)
+        if len(locs) == 0:
+            print('SIMULATION ENDED')
+
+        else:
+            target = locs[0]
+            if not (self.x == target[0] and self.y == target[1]):
+                self.helper_move(target)
