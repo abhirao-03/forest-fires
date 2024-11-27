@@ -118,10 +118,10 @@ class planes():
     def move(self, grid):
         # Meant purely for cleanliness of code. I.e. take in a grid and run `helper_move()` with acceptable inputs.
         locs = self.get_min_distance_cell_from_cluster(grid)
+    
         if len(locs) == 0:
-            print('SIMULATION ENDED')
-
-        else:
-            target = locs[0]
-            if not (self.x == target[0] and self.y == target[1]):
-                self.helper_move(target)
+                raise RuntimeError("Simulation stopped: No fire cells left.")
+                    
+        target = locs[0]
+        if not (self.x == target[0] and self.y == target[1]):
+            self.helper_move(target)
