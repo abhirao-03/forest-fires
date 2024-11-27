@@ -3,10 +3,26 @@ import matplotlib.pyplot as plt
 import random
 import scipy
 import PIL
+from perlin_noise.perlin_noise import PerlinNoise
 
 # -----------------------------------------------------------------------------------------------------------
 # JiaSun FUNCTIONS
 # -----------------------------------------------------------------------------------------------------------
+
+def generate_species(shape:tuple):
+    noise = PerlinNoise(octaves=3)
+    xpix, ypix = shape
+    pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
+    pic = np.array(pic)
+    pic = np.abs(pic)
+    species = np.zeros(shape = shape) 
+
+    max_noise = np.max(pic)
+    species[(pic<max_noise/2) & (pic>max_noise/6)] = 1/4
+    species[(pic<max_noise/3*2) & (pic>max_noise/2)] = 1/2
+    species[pic>max_noise/3*2] = 3/4
+
+    return species
 
 def start_fire_grid(grid,p=0.0001,burning_time=10):
     m = np.size(grid, 0)
@@ -15,7 +31,7 @@ def start_fire_grid(grid,p=0.0001,burning_time=10):
     count_down = np.zeros([m, n])
     M_p = np.random.rand(m, n)
     M[M_p > (1 - p)] = 3
-    M[grid > 0] = -1 #inflammable
+    M[grid > 0] = -100 #inflammable
     count_down[M == 3] = burning_time
     return M,count_down
 
@@ -97,10 +113,13 @@ def if_burning_around(M,i,j,wind_dir): #simplest
     if tmp==1 : return True
     else: return False
 
-def update(M,count_down,species,burning_time,growing_time,wind_dir=[0,0]):
+def update(M,count_down,species,burning_time = 10,growing_time = 50,wind_dir=[0,0]):
     m = np.size(M,0) #size
     n = np.size(M,1)
     M_copy = np.zeros([m,n])
+    M_copy[M==1/4] = 1/4
+    M_copy[M==3/4] = 3/4
+    M_copy[M==1/2] = 1/2
     M_copy[M==-1] = -1
     M_copy[M==4] = 4
     count_down_copy = count_down
@@ -108,7 +127,7 @@ def update(M,count_down,species,burning_time,growing_time,wind_dir=[0,0]):
         for j in np.arange(n):
             if(count_down_copy[i,j]!=0):
                 count_down_copy[i,j] -= 1
-            if(M[i,j]==0): #flammable
+            if(M[i,j]>=0 and M[i,j]<1): #flammable
                 if(if_burning_around(M,i,j,wind_dir)):
                     M_copy[i,j] = 3
                     #count_down_copy[i,j] = burning_time*density[i,j]
@@ -119,13 +138,13 @@ def update(M,count_down,species,burning_time,growing_time,wind_dir=[0,0]):
             elif(M[i,j]==3 and count_down_copy[i,j]!=0):
                 M_copy[i,j] = 3
             elif(M[i,j]==2): #burnt
-                M_copy[i,j] = 1 #growing
+                M_copy[i,j] = 1+species[i,j]/4 #growing
                 #count_down_copy[i,j] = np.random.randint(growing_time-10,growing_time+10)
                 count_down_copy[i,j] = growing_time[int(species[i,j])]
-            elif(M[i,j]==1 and count_down_copy[i,j]==0): 
-                M_copy[i,j] = 0 #flammable
-            elif(M[i,j]==1 and count_down_copy[i,j]!=0): 
-                M_copy[i,j] = 1 
+            elif(M[i,j]>=1 and M[i,j]<2 and count_down_copy[i,j]==0): 
+                M_copy[i,j] = species[i,j]/4 #flammable
+            elif(M[i,j]>=1 and M[i,j]<2 and count_down_copy[i,j]!=0): 
+                M_copy[i,j] = 1+species[i,j]/4
     return M_copy,count_down_copy
 
 def plot_M(M,ax):
