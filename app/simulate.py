@@ -10,9 +10,10 @@ grid = np.load('imaging/processed.npy')
 
 alpha_responder = planes(10, 0)
 
-M, count_down = start_fire_grid(grid)
+M, count_down = start_fire_grid(grid, p=0.00001)
+M[50,50] = 3
 species = np.zeros(shape=grid.shape)
-burning_time = [3]
+burning_time = [2]
 growing_time = [50]
 
 M[50, 50] = 3
@@ -22,10 +23,6 @@ count_down[50, 50] = 2
 m = np.size(M,0) 
 n = np.size(M,1)
 density = np.zeros([m, n])+1
-
-fig, ax = plt.subplots()
-artists = []
-N = 100
 
 cmap = ListedColormap([ 'blue', 'darkgreen', 'darkseagreen', 'grey', 'red', 'thistle'])
 boundaries = [-1.1, -0.5, 0.5, 1.1, 2.1, 3.1, 4.1]  # Boundaries to separate the color intervals

@@ -1,6 +1,8 @@
 import numpy as np
 from clustering import find_fire_clusters
 from utils import get_cell, set_cell
+import sys
+sys.tracebacklimit = 0
 
 class planes():
     """
@@ -120,6 +122,7 @@ class planes():
         locs = self.get_min_distance_cell_from_cluster(grid)
     
         if len(locs) == 0:
+                print('\n\n')
                 raise RuntimeError("Simulation stopped: No fire cells left.")
                     
         target = locs[0]
