@@ -22,11 +22,11 @@ class planes():
         helper_move, move                       movement of plane.
     """
 
-    def __init__(self, x: int, y: int, radius:int = 4, speed:float = 10.0):
-        self.x_init = x
-        self.y_init = y
-        self.x = x
-        self.y = y
+    def __init__(self, location:tuple = (0, 0), radius:int = 4, speed:float = 10.0):
+        self.x_init = location[0]
+        self.y_init = location[1]
+        self.x = self.x_init
+        self.y = self.y_init
         self.speed = speed
         self.num_extinguish = 0
 

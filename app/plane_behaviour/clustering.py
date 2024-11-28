@@ -1,3 +1,6 @@
+# This effective radius is what controls our clustering.
+# Each cluster considers the neighbouring cells using the effective radius and groups them together.
+# The more cells that are connected in this pattern, the higher the size.
 effective_radius = [
                   (-2, -1), (-2, 0), (-2, 1),
         (-1, -2), (-1, -1), (-1, 0), (-1, 1), (-1, 2),
@@ -6,16 +9,20 @@ effective_radius = [
                   (2, -1),  ( 2, 0), ( 2, 1)
     ]
 
+
 def find_fire_clusters(in_grid):
+    # grid preprocessing to only consider the burning cells.
     grid = in_grid.copy()
     grid[grid != 3] = int(0)
     grid[grid == 3] = int(1)
     
 
     rows, cols = len(grid), len(grid[0])
+
     visited = [[False] * cols for _ in range(rows)]
-    clusters = {}
-    cluster_id = 2
+
+    clusters = {}               # store clusters in a dictionary containing the size and the cells that are contained in the cluster.
+    cluster_id = 1              # start labelling clusters with id 1
 
     for i in range(rows):
         for j in range(cols):
