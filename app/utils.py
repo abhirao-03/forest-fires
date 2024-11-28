@@ -120,6 +120,10 @@ def update(M,count_down,species,burning_time = 10,growing_time = 50,wind_dir=[0,
     M_copy[M==1/4] = 1/4
     M_copy[M==3/4] = 3/4
     M_copy[M==1/2] = 1/2
+    M_copy[M==1] = 1
+    M_copy[M==1 + 1/4] = 1 + 1/4
+    M_copy[M==1 + 3/4] = 1 + 3/4
+    M_copy[M==1 + 1/2] = 1 + 1/2
     M_copy[M==-1] = -1
     M_copy[M==4] = 4
     count_down_copy = count_down
