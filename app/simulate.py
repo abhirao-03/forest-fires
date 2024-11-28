@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from utils import update, start_fire_grid, generate_species
-from plane import *
+from plane_behaviour.plane import *
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
 o, p = 100, 100
-grid = np.load('imaging/processed.npy')
+grid = np.load('src/processed.npy')
 
 #alpha_responder = planes(10, 0)
 

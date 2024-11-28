@@ -4,7 +4,7 @@ import numpy as np
 from utils import imwrite, linear_filter, bin_array_to_shape
 
 
-with PIL.Image.open('imaging/image.png', 'r') as h:
+with PIL.Image.open('src/image.png', 'r') as h:
     img = np.array(h, dtype=np.int64)
 
 img = img[:, :, :3]
@@ -29,5 +29,5 @@ img_linear[img_linear > 0] = 255
 plt.imshow(img_linear)
 plt.show()
 
-np.save('imaging/processed.npy', img_linear)
-imwrite('imaging/processed.png', img_linear)
+np.save('src/processed.npy', img_linear)
+imwrite('src/processed.png', img_linear)
