@@ -29,5 +29,5 @@ img_linear[img_linear > 0] = 255
 plt.imshow(img_linear)
 plt.show()
 
-np.save('src/processed.npy', img_linear)
-imwrite('src/processed.png', img_linear)
+np.save('results/processed.npy', img_linear)
+imwrite('results/processed.png', img_linear)

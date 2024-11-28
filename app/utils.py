@@ -18,9 +18,9 @@ def generate_species(shape:tuple):
     species = np.zeros(shape = shape) 
 
     max_noise = np.max(pic)
-    species[(pic<max_noise/2) & (pic>max_noise/6)] = 1/4
-    species[(pic<max_noise/3*2) & (pic>max_noise/2)] = 1/2
-    species[pic>max_noise/3*2] = 3/4
+    species[(pic<max_noise/2) & (pic>max_noise/6)] = 1
+    species[(pic<max_noise/3*2) & (pic>max_noise/2)] = 2
+    species[pic>max_noise/3*2] = 3
 
     return species
 
@@ -81,7 +81,7 @@ def if_burning_around(M,i,j,wind_dir): #simplest
     m = np.size(M,0) #size
     n = np.size(M,1)
     prob = burning_prob(wind_dir)
-    tol = 0.7
+    tol = 0.9
 
     if i%2==0 :
         if i!=0 and M[i-1,j] == 3 and prob[0]>tol: #1
@@ -114,18 +114,24 @@ def if_burning_around(M,i,j,wind_dir): #simplest
     else: return False
 
 def update(M,count_down,species,burning_time = 10,growing_time = 50,wind_dir=[0,0]):
-    m = np.size(M,0) #size
-    n = np.size(M,1)
+    m = np.size(M, 0) #size
+    n = np.size(M, 1)
     M_copy = np.zeros([m,n])
-    M_copy[M==1/4] = 1/4
-    M_copy[M==3/4] = 3/4
-    M_copy[M==1/2] = 1/2
-    M_copy[M==1] = 1
-    M_copy[M==1 + 1/4] = 1 + 1/4
-    M_copy[M==1 + 3/4] = 1 + 3/4
-    M_copy[M==1 + 1/2] = 1 + 1/2
-    M_copy[M==-1] = -1
-    M_copy[M==4] = 4
+
+    M_copy[M == 1/4] = 1/4
+    M_copy[M == 2/4] = 2/4
+    M_copy[M == 3/4] = 3/4
+
+    M_copy[M == 1] = 1
+    M_copy[M == 1 + 1/4] = 1 + 1/4
+    M_copy[M == 1 + 2/4] = 1 + 2/4
+    M_copy[M == 1 + 3/4] = 1 + 3/4
+    
+
+    M_copy[M == -1] = -1
+
+    M_copy[M == 4] = 4
+    
     count_down_copy = count_down
     for i in np.arange(m):
         for j in np.arange(n):

@@ -23,6 +23,8 @@ class planes():
     """
 
     def __init__(self, x: int, y: int, radius:int = 4, speed:float = 10.0):
+        self.x_init = x
+        self.y_init = y
         self.x = x
         self.y = y
         self.speed = speed
@@ -123,9 +125,12 @@ class planes():
         locs = self.get_min_distance_cell_from_cluster(grid)
     
         if len(locs) == 0:
-                print('\n\n')
-                raise RuntimeError("Simulation stopped: No fire cells left.")
-                    
-        target = locs[0]
+            # Move the plane back to its initial location
+            target = np.array([self.x_init, self.y_init])
+            
+        else:
+            # Target the closest fire cell
+            target = locs[0]
+
         if not (self.x == target[0] and self.y == target[1]):
             self.helper_move(target)
