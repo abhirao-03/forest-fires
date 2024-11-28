@@ -17,10 +17,13 @@ app/
 ├── * image_processor.py
 └── utils.py
 
+results/
+├── fire_sim.gif
+├── processed.npy
+└── processed.png
+
 src/
-├── image.png
-├── processed.png
-└── processed.npy
+└── image.png
 
 .gitignore
 .gitattributes
