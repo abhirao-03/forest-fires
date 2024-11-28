@@ -56,7 +56,7 @@ density = np.zeros([m, n])+1
 # Setup plot
 fig, ax = plt.subplots()
 ax.set_title("Fire Simulation")
-img = ax.imshow(M, cmap='hot')
+img = ax.imshow(M, cmap='viridis')
 
 #responder_marker, = ax.plot(alpha_responder.y, alpha_responder.x, 'bo', markersize=8, label="Responder")
 
