@@ -71,7 +71,7 @@ class planes():
         Clusters fires, finds closest cell in each fire.
         """
         # use depth-first-search to cluster fires and assign them values.
-        clusters = find_fire_clusters(grid)
+        clusters, _ = find_fire_clusters(grid)
 
         # sort through the fires based on size and return a list from most severe to least severe.
         priority_queue = sorted(clusters, key= lambda x: clusters[x]['size'], reverse=True)

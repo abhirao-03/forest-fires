@@ -55,4 +55,4 @@ def find_fire_clusters(in_grid):
                 clusters[cluster_id] = {'size': cluster_size, 'cells': cluster_cells}
                 cluster_id += 1
 
-    return clusters
+    return clusters, grid

@@ -87,8 +87,5 @@ def animate(frame):
 N = 40  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=N, blit=True)
 
-anim.save('results/fire_sim.gif', fps=200, dpi=300)
-print('VIEW YOUR SIMULATION IN THE `results` FOLDER')
-
 plt.legend()
 plt.show()
