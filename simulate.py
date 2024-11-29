@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import update, start_fire_grid, generate_species
+from utils import update, start_fire_grid, generate_species, generate_rain
 from plane import *
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap, BoundaryNorm
@@ -13,8 +13,11 @@ grid = np.load('C:/Users/10244/Downloads/forest-fires-nuke/forest-fires-nuke/ima
 M, count_down = start_fire_grid(grid, p=0.00001)
 M[50,50] = 3
 species = generate_species(shape=M.shape)
+rain = generate_rain(shape=M.shape)
 burning_time = [2, 3, 5, 10]
 growing_time = [10, 20, 50, 100]
+plt.imshow(rain)
+plt.show()
 
 M = M + species/4
 M[M < 0] = -1
@@ -63,7 +66,7 @@ img = ax.imshow(M, cmap='viridis')
 # Animation update function
 def animate(frame):
     global M, count_down
-    M, count_down = update(M, count_down, species, burning_time, growing_time, wind_dir=[100, -100])
+    M, count_down = update(M, count_down, species, rain, burning_time, growing_time, wind_dir=[100, -100])
 
     #alpha_responder.move(M)
     #alpha_responder.extinguish(M)
