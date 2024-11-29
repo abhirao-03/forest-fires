@@ -6,7 +6,6 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.colors import ListedColormap, BoundaryNorm
 
 grid = np.load('results/processed.npy')
-grid = np.zeros(shape=grid.shape)
 
 #alpha_responder = planes(location=(10, 0), radius=4, speed=2)       # Initiate our plane at (10, 0) that has speed 2 cells with an effective radius of 4.
 
