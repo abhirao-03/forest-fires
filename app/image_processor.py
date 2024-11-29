@@ -15,7 +15,7 @@ img[img[:, :, 0] > 210] = 0
 W_0 = np.array([[1,1,1],
                 [1,1,1],
                 [1,1,1]]
-              ) * 10
+              ) * 1
 
 img_linear = linear_filter(img, W_0, mode = "reflect")
 

@@ -24,6 +24,20 @@ def generate_species(shape:tuple):
 
     return species
 
+def generate_rain(shape:tuple):
+    noise = PerlinNoise(octaves=2)
+    xpix, ypix = shape
+    pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
+    pic = np.array(pic)
+    pic = np.abs(pic)
+    rain = np.zeros(shape = shape) 
+
+    max_noise = np.max(pic)
+    rain[(pic<max_noise/3*2) & (pic>max_noise/3)] = 1
+    rain[(pic>max_noise/3*2)] = 2
+
+    return rain
+
 def start_fire_grid(grid,p=0.0001,burning_time=10):
     m = np.size(grid, 0)
     n = np.size(grid, 1)
@@ -76,12 +90,11 @@ def burning_prob(wind_dir): #[0,1] from south [1,0] from east
     
     return prob
 
-def if_burning_around(M,i,j,wind_dir): #simplest
+def if_burning_around(M,i,j,wind_dir, tol=0.8): #simplest
     tmp = 0
     m = np.size(M,0) #size
     n = np.size(M,1)
     prob = burning_prob(wind_dir)
-    tol = 0.9
 
     if i%2==0 :
         if i!=0 and M[i-1,j] == 3 and prob[0]>tol: #1
@@ -113,32 +126,27 @@ def if_burning_around(M,i,j,wind_dir): #simplest
     if tmp==1 : return True
     else: return False
 
-def update(M,count_down,species,burning_time = 10,growing_time = 50,wind_dir=[0,0]):
-    m = np.size(M, 0) #size
-    n = np.size(M, 1)
+def update(M,count_down, species, rain, burning_time = 10, growing_time = 50, wind_dir = [0,0]):
+    m = np.size(M,0) #size
+    n = np.size(M,1)
     M_copy = np.zeros([m,n])
-
-    M_copy[M == 1/4] = 1/4
-    M_copy[M == 2/4] = 2/4
-    M_copy[M == 3/4] = 3/4
-
-    M_copy[M == 1] = 1
-    M_copy[M == 1 + 1/4] = 1 + 1/4
-    M_copy[M == 1 + 2/4] = 1 + 2/4
-    M_copy[M == 1 + 3/4] = 1 + 3/4
-    
-
-    M_copy[M == -1] = -1
-
-    M_copy[M == 4] = 4
-    
+    M_copy[M==1/4] = 1/4
+    M_copy[M==3/4] = 3/4
+    M_copy[M==1/2] = 1/2
+    M_copy[M==1] = 1
+    M_copy[M==1 + 1/4] = 1 + 1/4
+    M_copy[M==1 + 3/4] = 1 + 3/4
+    M_copy[M==1 + 1/2] = 1 + 1/2
+    M_copy[M==-1] = -1
+    M_copy[M==4] = 4
     count_down_copy = count_down
     for i in np.arange(m):
         for j in np.arange(n):
             if(count_down_copy[i,j]!=0):
                 count_down_copy[i,j] -= 1
+            tol = 0.8+0.045*rain[i,j]
             if(M[i,j]>=0 and M[i,j]<1): #flammable
-                if(if_burning_around(M,i,j,wind_dir)):
+                if(if_burning_around(M,i,j, wind_dir, tol)):
                     M_copy[i,j] = 3
                     #count_down_copy[i,j] = burning_time*density[i,j]
                     count_down_copy[i,j] = burning_time[int(species[i,j])]
@@ -150,6 +158,8 @@ def update(M,count_down,species,burning_time = 10,growing_time = 50,wind_dir=[0,
             elif(M[i,j]==2): #burnt
                 M_copy[i,j] = 1+species[i,j]/4 #growing
                 #count_down_copy[i,j] = np.random.randint(growing_time-10,growing_time+10)
+                if(species[i,j]!=0):
+                    test = species[i,j]/4
                 count_down_copy[i,j] = growing_time[int(species[i,j])]
             elif(M[i,j]>=1 and M[i,j]<2 and count_down_copy[i,j]==0): 
                 M_copy[i,j] = species[i,j]/4 #flammable
