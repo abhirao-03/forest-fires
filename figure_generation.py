@@ -33,7 +33,7 @@ norm = BoundaryNorm(bounds, cmap.N)
 data = np.load('output.npy')
 plot_data = data[25]
 norm_plot = plot_data[35:79, 29:73]
-plot_data = plot_data[30:90, 30:90]
+plot_data = plot_data[35:79, 29:73]
 
 fig = plt.figure(figsize=(5, 5))
 plt.imshow(norm_plot, cmap=cmap, norm=norm)
