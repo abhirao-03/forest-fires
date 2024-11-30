@@ -5,7 +5,6 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 
 M_tracked = np.load('M_tracked.npy')
 M_tracked = M_tracked[:, 76:226, 76:226]
-M_tracked[0][M_tracked[0] == 3] = 0
 
 colors = ["#38afcd",       # River
           
@@ -34,7 +33,7 @@ norm = BoundaryNorm(bounds, cmap.N)
 
 fig = plt.figure(figsize=(12, 12))
 
-plt.imshow(M_tracked[0], cmap=cmap, norm=norm)
+plt.imshow(M_tracked[1], cmap=cmap, norm=norm)
 plt.axis('off')
 plt.tight_layout()
 plt.show()

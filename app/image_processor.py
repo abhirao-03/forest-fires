@@ -1,10 +1,14 @@
 import matplotlib.pyplot as plt
 import PIL.Image
 import numpy as np
-from utils import imwrite, linear_filter, bin_array_to_shape
+from utils import imwrite, bin_array_to_shape
+import json
+
+with open('settings.json', 'r') as f:
+  settings = json.load(f)
 
 
-with PIL.Image.open('src/image.png', 'r') as h:
+with PIL.Image.open(settings['image_path'], 'r') as h:
     img = np.array(h, dtype=np.int64)
 
 img = img[:, :, :3]
@@ -20,7 +24,16 @@ img[img[:, :, 0] > 210] = 0
 # img_linear = linear_filter(img, W_0, mode = "reflect")
 
 img_linear = np.sum(img, axis=2)
-img_linear = bin_array_to_shape(img_linear, (300, 300))
+
+if settings['quality'] == 'high':
+   img_linear = bin_array_to_shape(img_linear, (300, 300))
+elif settings['quality'] == 'medium':
+   img_linear = bin_array_to_shape(img_linear, (200, 200))
+elif settings['quality'] == 'low':
+   img_linear = bin_array_to_shape(img_linear, (100, 100))
+else:
+  raise RuntimeError("Invalid Simulation Quality Setting. Please check settings.json")
+
 img_linear[img_linear > 0] = 255
 
 plt.imshow(img_linear)

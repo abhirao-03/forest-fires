@@ -4,12 +4,13 @@ import random
 import scipy
 import PIL
 from perlin_noise.perlin_noise import PerlinNoise
+from matplotlib.colors import ListedColormap, BoundaryNorm
 
 # -----------------------------------------------------------------------------------------------------------
 # JiaSun FUNCTIONS
 # -----------------------------------------------------------------------------------------------------------
 
-def generate_species(shape:tuple):
+def generate_densities(shape:tuple):
     noise = PerlinNoise(octaves=3, seed=34567)
     xpix, ypix = shape
     pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
@@ -309,3 +310,28 @@ def bin_array_to_shape(arr, target_shape):
     binned = binned.reshape(target_rows, row_factor, target_cols, col_factor).mean(axis=(1, 3))
 
     return binned
+
+# Define the colors for each value
+colors = ["#38afcd",       # River
+          
+          "#051f20",       # Species 1 flammable
+          "#0b2b26",       # Species 2 flammable
+          "#163832",       # Species 3 flammable
+          "#235347",       # Species 4 flammable
+
+          "#3e3636",       # Species 1 growing
+          "#5d5555",       # Species 2 growing
+          "#716868",       # Species 3 growing
+          "#999090",       # Species 4 growing
+
+          "#4e1003",       # Burnt
+          "#FF4500",       # On fire
+          "#D8BFD8"        # Extinguished
+          ]
+
+# Define the bounds corresponding to the values -- bounds are not inclusive so we have to add a little bit, 0.1, to our actual values.
+bounds = [-1.1, -0.1, 0.1, 0.251, 0.51, 0.751, 1.1, 1.251, 1.51, 1.751, 2.1, 3.1, 4.1]  
+
+# Create the colormap and norm
+cmap = ListedColormap(colors)
+norm = BoundaryNorm(bounds, cmap.N)

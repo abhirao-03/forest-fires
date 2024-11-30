@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import update, start_fire_grid, generate_species, generate_rain
+from utils import update, start_fire_grid, generate_densities, generate_rain
 from plane_behaviour.plane import *
 
 grid = np.load('results/processed.npy')
@@ -8,7 +8,7 @@ grid = np.load('results/processed.npy')
 M, count_down = start_fire_grid(grid, p=0.00000001)                    # Generate a grid
 
 # We provide 4 different densities with varying burn and growth rates.
-species = generate_species(shape=M.shape)
+species = generate_densities(shape=M.shape)
 burning_time = [2, 3, 4, 5]
 growing_time = [200, 225, 250, 275]
 
@@ -39,7 +39,7 @@ for i in range(50):
                            rain=rain,
                            burning_time=burning_time,
                            growing_time=growing_time,
-                           wind_dir=[-10, 10])
+                           wind_dir=[0, 0])
     
     large_M[76:226, 76:226] = M
 
