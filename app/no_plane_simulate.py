@@ -7,8 +7,7 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 
 grid = np.load('results/processed.npy')
 
-M, count_down = start_fire_grid(grid, p=0.00001)                    # Generate a grid
-M = np.zeros(shape=M.shape)
+M, count_down = start_fire_grid(grid, p=0.00000001)                    # Generate a grid
 
 # We provide 4 different densities with varying burn and growth rates.
 species = generate_species(shape=M.shape)
@@ -23,17 +22,17 @@ M = M + species/4
 # Fix any artifacting from adding varying densities to our grid.
 M[M < 0] = -1
 
-M[40, 75] = 3
-count_down[40, 75] = 2
+M[158, 144] = 3
+count_down[158, 144] = 2
 
-M[40, 80] = 3
-count_down[40, 80] = 2
+# M[40, 80] = 3
+# count_down[40, 80] = 2
 
-M[40, 85] = 3
-count_down[40, 85] = 2
+# M[40, 85] = 3
+# count_down[40, 85] = 2
 
-M[45, 90] = 3
-count_down[45, 90] = 2
+# M[45, 90] = 3
+# count_down[45, 90] = 2
 
 # Define the colors for each value
 colors = ["#38afcd",       # River
@@ -75,7 +74,7 @@ def animate(frame):
                            rain=rain,
                            burning_time=burning_time,
                            growing_time=growing_time,
-                           wind_dir=[0, 10])
+                           wind_dir=[-10, 10])
 
 
     img.set_data(M)
