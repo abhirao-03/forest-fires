@@ -4,6 +4,6 @@
     "quality": "high",
     "rain": false,
     "varying_densities": true,
-    "burn_time": [2, 3, 2, 1],
+    "burn_time": [2, 3, 5, 7],
     "grow_time": [200, 225, 250, 275]
 }

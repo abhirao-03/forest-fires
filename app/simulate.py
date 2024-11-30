@@ -10,12 +10,14 @@ import json
 with open('settings.json', 'r') as f:
   settings = json.load(f)
 
-grid = np.load('results/processed.npy')
+grid = np.zeros(shape=(200,200))
 M, count_down = start_fire_grid(grid, p=0.00001)                    # Generate a grid
 
 if settings['varying_densities'] == True:
     # We provide 4 different densities with varying burn and growth rates.
     species = generate_densities(shape=M.shape)
+    species = np.load('real_world.npy') * 4
+    
     burning_time = settings['burn_time']
     growing_time = settings['grow_time']
 else:
@@ -33,18 +35,29 @@ M = M + species/4
 M[M < 0] = -1
 
 
-M[50, 75] = 3
-count_down[50, 75] = 2
+M[80, 85:87] = 3
+count_down[80, 85:87] = 2
 
-M[50, 70] = 3
-count_down[50, 70] = 2
+M[81, 86:90] = 3
+count_down[81, 86:90] = 2
 
-M[50, 80] = 3
-count_down[50, 80] = 2
+M[82, 91] = 3
+count_down[82, 91] = 2
 
-M[55, 90] = 3
-count_down[55, 90] = 2
+M[82, 92] = 3
+count_down[82, 92] = 2
 
+M[83, 98] = 3
+count_down[83, 98] = 2
+
+M[84, 99] = 3
+count_down[84, 99] = 2
+
+M[84, 98] = 3
+count_down[84, 98] = 2
+
+plt.imshow(M)
+plt.show()
 
 # Setup plot
 fig, ax = plt.subplots(figsize=(12, 12))
@@ -57,6 +70,7 @@ if settings["plane"] == True:
 
 # Animation update function
 def animate(frame):
+    plt.title(f"time step {frame}")
     global M, count_down
     M, count_down = update(M=M,
                            count_down=count_down,
@@ -64,7 +78,7 @@ def animate(frame):
                            rain=rain,
                            burning_time=burning_time,
                            growing_time=growing_time,
-                           wind_dir=[-10, -10])
+                           wind_dir=[10, 10])
 
     img.set_data(M)
 
@@ -79,10 +93,11 @@ def animate(frame):
         return [img]
 
 # Create animation
-N = 900  # Number of frames
+N = 200  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=10, blit=True)
-
-if settings['plane'] == True: plt.legend()
-
 plt.tight_layout()
+if settings['plane'] == True: plt.legend()
+anim.save('non_plane.gif')
+
+
 plt.show()

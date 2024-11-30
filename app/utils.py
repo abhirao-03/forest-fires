@@ -145,7 +145,7 @@ def update(M,count_down, species, rain, burning_time = 10, growing_time = 50, wi
         for j in np.arange(n):
             if(count_down_copy[i,j]!=0):
                 count_down_copy[i,j] -= 1
-            tol = 0.90+0.045*rain[i,j]
+            tol = 0.9+0.045*rain[i,j]
             if(M[i,j]>=0 and M[i,j]<1): #flammable
                 if(if_burning_around(M,i,j, wind_dir, tol)):
                     M_copy[i,j] = 3
