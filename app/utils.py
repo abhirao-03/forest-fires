@@ -10,7 +10,7 @@ from perlin_noise.perlin_noise import PerlinNoise
 # -----------------------------------------------------------------------------------------------------------
 
 def generate_species(shape:tuple):
-    noise = PerlinNoise(octaves=3)
+    noise = PerlinNoise(octaves=3, seed=123456789)
     xpix, ypix = shape
     pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
     pic = np.array(pic)

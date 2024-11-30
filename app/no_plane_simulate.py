@@ -7,8 +7,6 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 
 grid = np.load('results/processed.npy')
 
-alpha_responder = planes(location=(10, 0), radius=4, speed=4)       # Initiate our plane at (10, 0) that has speed 2 cells with an effective radius of 4.
-
 M, count_down = start_fire_grid(grid, p=0.00001)                    # Generate a grid
 
 # We provide 4 different densities with varying burn and growth rates.
@@ -57,8 +55,6 @@ fig, ax = plt.subplots(figsize=(12, 12))
 ax.axis('off')
 img = ax.imshow(M, cmap=cmap, norm=norm)
 
-responder_marker, = ax.plot(alpha_responder.y, alpha_responder.x, 'ws', markersize=8, label="Responder")
-
 # Animation update function
 def animate(frame):
     global M, count_down
@@ -70,17 +66,13 @@ def animate(frame):
                            growing_time=growing_time,
                            wind_dir=[0, 10])
 
-    alpha_responder.move(M)
-    alpha_responder.extinguish(M)
 
     img.set_data(M)
-    responder_marker.set_data([[alpha_responder.y], [alpha_responder.x]]) # nested list prevents deprecation warning.
 
-    return [img , responder_marker]
+    return [img]
 
 # Create animation
 N = 40  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=N, blit=True)
 
-plt.legend()
 plt.show()
