@@ -85,4 +85,4 @@ anim = FuncAnimation(fig, animate, frames=N, interval=10, blit=True)
 if settings['plane'] == True: plt.legend()
 
 plt.tight_layout()
-anim.save('fire_path.gif', fps=60, dpi=200)
+plt.show()
