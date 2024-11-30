@@ -10,7 +10,7 @@ from perlin_noise.perlin_noise import PerlinNoise
 # -----------------------------------------------------------------------------------------------------------
 
 def generate_species(shape:tuple):
-    noise = PerlinNoise(octaves=3, seed=123456789)
+    noise = PerlinNoise(octaves=3, seed=34567)
     xpix, ypix = shape
     pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
     pic = np.array(pic)
@@ -144,7 +144,7 @@ def update(M,count_down, species, rain, burning_time = 10, growing_time = 50, wi
         for j in np.arange(n):
             if(count_down_copy[i,j]!=0):
                 count_down_copy[i,j] -= 1
-            tol = 0.8+0.045*rain[i,j]
+            tol = 0.82+0.045*rain[i,j]
             if(M[i,j]>=0 and M[i,j]<1): #flammable
                 if(if_burning_around(M,i,j, wind_dir, tol)):
                     M_copy[i,j] = 3

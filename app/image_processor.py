@@ -23,7 +23,7 @@ img_linear = linear_filter(img, W_0, mode = "reflect")
 #     img_linear = linear_filter(img_linear, W_0, mode = "reflect")
 
 img_linear = np.sum(img_linear, axis=2)
-img_linear = bin_array_to_shape(img_linear, (100, 100))
+img_linear = bin_array_to_shape(img_linear, (200, 200))
 img_linear[img_linear > 0] = 255
 
 plt.imshow(img_linear)
