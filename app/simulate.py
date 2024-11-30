@@ -5,7 +5,7 @@ from plane_behaviour.plane import *
 from matplotlib.animation import FuncAnimation
 import json
 
-from image_processor import *
+#from image_processor import *
 
 with open('settings.json', 'r') as f:
   settings = json.load(f)
@@ -33,8 +33,18 @@ M = M + species/4
 M[M < 0] = -1
 
 
-M[110, 28] = 3
-count_down[110, 28] = 2
+M[50, 75] = 3
+count_down[50, 75] = 2
+
+M[50, 70] = 3
+count_down[50, 70] = 2
+
+M[50, 80] = 3
+count_down[50, 80] = 2
+
+M[55, 90] = 3
+count_down[55, 90] = 2
+
 
 # Setup plot
 fig, ax = plt.subplots(figsize=(12, 12))
@@ -42,7 +52,7 @@ ax.axis('off')
 img = ax.imshow(M, cmap=cmap, norm=norm)
 
 if settings["plane"] == True:
-    alpha_responder = planes(location=(10,0), speed=10)
+    alpha_responder = planes(location=(10,0), speed=20)
     responder_marker, = ax.plot(alpha_responder.y, alpha_responder.x, 'ws', markersize=8, label="Responder")
 
 # Animation update function
@@ -54,7 +64,7 @@ def animate(frame):
                            rain=rain,
                            burning_time=burning_time,
                            growing_time=growing_time,
-                           wind_dir=[0, 0])
+                           wind_dir=[-10, -10])
 
     img.set_data(M)
 
@@ -69,8 +79,10 @@ def animate(frame):
         return [img]
 
 # Create animation
-N = 40  # Number of frames
+N = 900  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=10, blit=True)
 
 if settings['plane'] == True: plt.legend()
-plt.show()
+
+plt.tight_layout()
+anim.save('fire_path.gif', fps=60, dpi=200)

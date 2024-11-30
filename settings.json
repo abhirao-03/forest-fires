@@ -2,8 +2,8 @@
     "image_path": "src/image.png",
     "plane": false,
     "quality": "high",
-    "rain": true,
+    "rain": false,
     "varying_densities": true,
-    "burn_time": [2, 3, 4, 5],
+    "burn_time": [2, 3, 2, 1],
     "grow_time": [200, 225, 250, 275]
 }
