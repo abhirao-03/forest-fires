@@ -13,11 +13,11 @@ grid = np.load('C:/Users/10244/Downloads/forest-fires-nuke/forest-fires-nuke/ima
 M, count_down = start_fire_grid(grid, p=0.00001)
 M[50,50] = 3
 species = generate_species(shape=M.shape)
-rain = generate_rain(shape=M.shape)
+#rain = generate_rain(shape=M.shape)
 burning_time = [2, 3, 5, 10]
 growing_time = [10, 20, 50, 100]
-plt.imshow(rain)
-plt.show()
+#plt.imshow(rain)
+#plt.show()
 
 M = M + species/4
 M[M < 0] = -1
@@ -29,6 +29,7 @@ count_down[50, 50] = 2
 m = np.size(M,0) 
 n = np.size(M,1)
 density = np.zeros([m, n])+1
+rain = np.zeros([m,n])
 
 cmap = ListedColormap([ 'blue',
                         'darkgreen',
@@ -63,10 +64,13 @@ img = ax.imshow(M, cmap='viridis')
 
 #responder_marker, = ax.plot(alpha_responder.y, alpha_responder.x, 'bo', markersize=8, label="Responder")
 
+def wind_dir(i):
+    return [np.sin(i*np.pi/50),np.cos(i*np.pi/50)]
+
 # Animation update function
 def animate(frame):
     global M, count_down
-    M, count_down = update(M, count_down, species, rain, burning_time, growing_time, wind_dir=[100, -100])
+    M, count_down = update(M, count_down, species, rain, burning_time, growing_time, wind_dir=wind_dir(frame))
 
     #alpha_responder.move(M)
     #alpha_responder.extinguish(M)
@@ -77,7 +81,7 @@ def animate(frame):
     return [img]#, responder_marker]
 
 # Create animation
-N = 200 # Number of frames
+N = 150 # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=50, blit=True)
 anim.save('fire_species.gif')
 
