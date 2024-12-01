@@ -62,7 +62,7 @@ plt.show()
 # Setup plot
 fig, ax = plt.subplots(figsize=(12, 12))
 ax.axis('off')
-img = ax.imshow(M, cmap=cmap, norm=norm)
+img = ax.imshow(M.T, cmap=cmap, norm=norm)
 
 if settings["plane"] == True:
     alpha_responder = planes(location=(10,0), speed=20)
@@ -78,7 +78,7 @@ def animate(frame):
                            rain=rain,
                            burning_time=burning_time,
                            growing_time=growing_time,
-                           wind_dir=[10, 10])
+                           wind_dir=[-10, 10])
 
     img.set_data(M)
 
@@ -87,7 +87,7 @@ def animate(frame):
         alpha_responder.extinguish(M)
         responder_marker.set_data([[alpha_responder.y], [alpha_responder.x]]) # nested list prevents deprecation warning.
 
-        return [img , responder_marker]
+        return [img, responder_marker]
     
     else:
         return [img]
@@ -97,7 +97,7 @@ N = 200  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=10, blit=True)
 plt.tight_layout()
 if settings['plane'] == True: plt.legend()
-anim.save('non_plane.gif')
+anim.save('AHHHH.gif')
 
 
 plt.show()

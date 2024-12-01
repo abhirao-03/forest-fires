@@ -74,6 +74,13 @@ def burning_prob(wind_dir): #[0,1] from south [1,0] from east
             theta = np.pi/2
         else:
             theta = -np.pi/2
+
+    if(wind_dir[0]<0):
+        if(wind_dir[1]>0):
+            theta = theta + np.pi
+        else:
+            theta = theta - np.pi
+    
     theta = np.pi - theta
 
     distance[0] = abs(theta-2/3*np.pi)
@@ -91,12 +98,12 @@ def burning_prob(wind_dir): #[0,1] from south [1,0] from east
     
     return prob
 
-def if_burning_around(M,i,j,wind_dir, tol=0.8): #simplest
+def if_burning_around(M,i,j,wind_dir,tol = 0.9): #simplest
     tmp = 0
     m = np.size(M,0) #size
     n = np.size(M,1)
     prob = burning_prob(wind_dir)
-
+    
     if i%2==0 :
         if i!=0 and M[i-1,j] == 3 and prob[0]>tol: #1
             tmp = 1
@@ -127,7 +134,7 @@ def if_burning_around(M,i,j,wind_dir, tol=0.8): #simplest
     if tmp==1 : return True
     else: return False
 
-def update(M,count_down, species, rain, burning_time = 10, growing_time = 50, wind_dir = [0,0]):
+def update(M,count_down,species,rain,burning_time = 10,growing_time = 50,wind_dir=[0,0]):
     m = np.size(M,0) #size
     n = np.size(M,1)
     M_copy = np.zeros([m,n])
@@ -147,7 +154,7 @@ def update(M,count_down, species, rain, burning_time = 10, growing_time = 50, wi
                 count_down_copy[i,j] -= 1
             tol = 0.9+0.045*rain[i,j]
             if(M[i,j]>=0 and M[i,j]<1): #flammable
-                if(if_burning_around(M,i,j, wind_dir, tol)):
+                if(if_burning_around(M,i,j,wind_dir,tol)):
                     M_copy[i,j] = 3
                     #count_down_copy[i,j] = burning_time*density[i,j]
                     count_down_copy[i,j] = burning_time[int(species[i,j])]
