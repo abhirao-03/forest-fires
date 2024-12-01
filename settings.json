@@ -1,9 +1,12 @@
 {
+    "use_personal_image": true,
     "image_path": "src/image.png",
-    "plane": false,
-    "quality": "high",
-    "rain": false,
-    "varying_densities": true,
-    "burn_time": [2, 3, 5, 7],
-    "grow_time": [200, 225, 250, 275]
+    "fire_probability": 0.0000001,
+    "has_plane": false,
+    "quality": "medium",                    
+    "has_rain": false,
+    "has_varying_densities": false,
+    "burn_time": [5, 3, 5, 7],
+    "grow_time": [200, 225, 250, 275],
+    "wind_direction": "S"
 }

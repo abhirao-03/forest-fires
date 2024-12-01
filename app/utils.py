@@ -11,7 +11,7 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 # -----------------------------------------------------------------------------------------------------------
 
 def generate_densities(shape:tuple):
-    noise = PerlinNoise(octaves=3, seed=34567)
+    noise = PerlinNoise(octaves=3, seed=3124)
     xpix, ypix = shape
     pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
     pic = np.array(pic)
@@ -38,6 +38,16 @@ def generate_rain(shape:tuple):
     rain[(pic>max_noise/3*2)] = 2
 
     return rain
+
+def start_fire_at(grid, count_down, location=(30, 30)):
+    len_x, len_y = grid.shape
+
+    x_loc = location[0] % len_x 
+    y_loc = location[1] % len_y 
+
+    grid[y_loc, x_loc] = 3
+    count_down[y_loc, x_loc] = 2
+    return grid, count_down
 
 def start_fire_grid(grid,p=0.0001,burning_time=10):
     m = np.size(grid, 0)

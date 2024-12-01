@@ -4,7 +4,7 @@ import numpy as np
 from scipy.ndimage import zoom
 from app.utils import imwrite, bin_array_to_shape
 
-with PIL.Image.open('src/all.jpg', 'r') as h:
+with PIL.Image.open('src/real_world.jpg', 'r') as h:
     img = np.array(h, dtype=np.int64)
 
 
