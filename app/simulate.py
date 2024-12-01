@@ -109,7 +109,7 @@ ax.axis('off')
 img = ax.imshow(M.T, cmap=cmap, norm=norm)
 
 if settings['has_plane'] == True:
-    alpha_responder = planes(location=(10,0), speed=20)
+    alpha_responder = planes(location=(10,0), radius=settings["plane_radius"], speed=settings["plane_speed"])
     responder_marker, = ax.plot(alpha_responder.y, alpha_responder.x, 'ws', markersize=8, label="Responder")
 
 # Animation update function
