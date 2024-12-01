@@ -73,6 +73,13 @@ def burning_prob(wind_dir): #[0,1] from south [1,0] from east
             theta = np.pi/2
         else:
             theta = -np.pi/2
+
+    if(wind_dir[0]<0):
+        if(wind_dir[1]>0):
+            theta = theta + np.pi
+        else:
+            theta = theta - np.pi
+    
     theta = np.pi - theta
 
     distance[0] = abs(theta-2/3*np.pi)
@@ -144,7 +151,7 @@ def update(M,count_down,species,rain,burning_time = 10,growing_time = 50,wind_di
         for j in np.arange(n):
             if(count_down_copy[i,j]!=0):
                 count_down_copy[i,j] -= 1
-            tol = 0.9+0.045*rain[i,j]
+            tol = 0.8+0.045*rain[i,j]
             if(M[i,j]>=0 and M[i,j]<1): #flammable
                 if(if_burning_around(M,i,j,wind_dir,tol)):
                     M_copy[i,j] = 3
