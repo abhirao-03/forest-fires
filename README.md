@@ -63,8 +63,9 @@ README.md
 
 Modify the `settings.json` file to control the simulation's behavior:
 
-- **Grid Quality:**
+- **Simulation Settings:**
   - `quality`: `"low"`, `"medium"`, or `"high"` for different grid resolutions. Corresponding to $100\times100$, $200\times200$ or $300\times300$ respectively.
+  - `time_steps`: how long you want the simulation to run.
 
 - **Environmental Settings:**
   - `fire_probability`: Probability of fire igniting on each grid cell. If your simulation includes a plane, note that as your simulation quality increases this probability should decrease. Otherwise the plane will dart around with its head loose.
@@ -72,13 +73,17 @@ Modify the `settings.json` file to control the simulation's behavior:
   - `has_varying_densities`: `true`/`false` for 4 varied vegetation densities.
   - `burn_time` and `grow_time`: Arrays specifying burn and growth rates for 4 of the vegetation densities. If `has_varying_densities` is `false` then the simulation takes the first value from each list.
   - `wind_direction`: Options include `"N"`, `"S"`, `"E"`, `"W"`, `"NW"`, `"NE"`, `"SW"`, `"SE"`.
+
 - **Image Settings:**
   - `use_personal_image`: `true`/`false` to load a custom grid from an image file.
   - `image_path`: Path to the custom image.
+
 - **Fire Suppression:**
-  - `has_plane`: `true`/`false` to enable or disable the firefighting plane.
+  - `has_plane`: `true`/`false` to enable or disable the plane.
   - `plane_speed`: The maximum speed of the plane in terms of cells per time step.
   - `plane_radius`: The effective radius of the plane for fire surpression.
+
+**NOTE** By default the simulation uses the image provided in the `src/` directory.
 
 
 ## How to Run

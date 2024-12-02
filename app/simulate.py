@@ -135,7 +135,7 @@ def animate(frame):
         return [img]
 
 # Create animation
-N = 500  # Number of frames
+N = settings['time_steps']  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=10, blit=True)
 plt.tight_layout()
 if settings['has_plane'] == True: plt.legend()

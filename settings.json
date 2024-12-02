@@ -1,16 +1,16 @@
 {
-    "use_personal_image": false,
+    "use_personal_image": true,
     "image_path": "src/image.png",
+    "quality": "low",
+    "time_steps": 100,
     
     "fire_probability": 0.0000001,
 
-    "has_plane": false,
+    "has_plane": true,
     "plane_speed": 8,
     "plane_radius": 4,
 
-    "quality": "low",
-
-    "wind_direction": "S",                    
+    "wind_direction": "NW",
     "has_rain": false,
 
     "has_varying_densities": true,
