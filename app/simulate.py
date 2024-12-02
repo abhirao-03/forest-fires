@@ -5,8 +5,6 @@ from plane_behaviour.plane import *
 from matplotlib.animation import FuncAnimation
 import json
 
-#from image_processor import *
-
 with open('settings.json', 'r') as f:
   settings = json.load(f)
 
@@ -137,7 +135,7 @@ def animate(frame):
         return [img]
 
 # Create animation
-N = 20  # Number of frames
+N = 100  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=10, blit=True)
 plt.tight_layout()
 if settings['has_plane'] == True: plt.legend()
