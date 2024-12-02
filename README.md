@@ -1,20 +1,20 @@
-# Forest Fires Industrial Mathematics
+# 🔥 Forest Fires Industrial Mathematics 
 ## Overview
 This project is a an agent based model to simulate the spread of fire across a grid under various environmental conditions, including wind, rain, and varying vegetation densities.
 
 ## Features
-### Environmental Factors.
+### 🌲 Environmental Factors.
   - Wind effects with directional control.
   - Rainfall to simulate suppression.
   - Varying vegetation densities affecting burn and growth rates.
 
   **NOTE:** We generate rain and density using Perlin noise and we use the following library [Salaxieb's Perlin noise Generator](https://github.com/salaxieb/perlin_noise/tree/master).
 
-### Custom Visualisation Settings.
+### ⚙️ Custom Visualisation Settings.
   - High, medium, or low-resolution grid options.
   - Personal image integration for custom grid backgrounds.
 
-### Planes!
+### ✈️ Planes!
 - Specify parameters of your plane in `settings.json` and watch it put out a fire!
 
 ## File Structure
