@@ -1,7 +1,7 @@
 import numpy as np
 from utils import get_cell, set_cell
 import sys
-sys.tracebacklimit = 0
+sys.tracebacklimit = 0          # stop certain deprecation warnings from clogging up the terminal.
 sys.path.append('./app/plane_behaviour/')
 from clustering import find_fire_clusters
 
