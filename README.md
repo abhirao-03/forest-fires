@@ -8,7 +8,7 @@ This project is a an agent based model to simulate the spread of fire across a g
   - Rainfall to simulate suppression.
   - Varying vegetation densities affecting burn and growth rates.
 
-  **NOTE**: We generate rain and density using Perlin noise and we use the following library [Salaxieb's Perlin noise Generator](https://github.com/salaxieb/perlin_noise/tree/master).
+  **NOTE:** We generate rain and density using Perlin noise and we use the following library [Salaxieb's Perlin noise Generator](https://github.com/salaxieb/perlin_noise/tree/master).
 
 ### Custom Visualisation Settings.
   - High, medium, or low-resolution grid options.
@@ -83,7 +83,7 @@ Modify the `settings.json` file to control the simulation's behavior:
   - `plane_speed`: The maximum speed of the plane in terms of cells per time step.
   - `plane_radius`: The effective radius of the plane for fire surpression.
 
-**NOTE** By default the simulation uses the image provided in the `src/` directory.
+**NOTE:** By default the simulation uses the image provided in the `src/` directory.
 
 
 ## How to Run
