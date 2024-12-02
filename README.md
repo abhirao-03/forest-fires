@@ -86,12 +86,13 @@ Modify the `settings.json` file to control the simulation's behavior:
 ### Personal Image
 1. If you'd like to input your own area, head to this link and take a screenshot <a href="https://www.google.com/maps/d/viewer?mid=1OpMoz-v9iOYinQPbBzzx_lBT0QO8h-8&ll=-37.38159633507727%2C148.62546596105895&z=10" target="_blank">Forest Fires</a>.
 2. Place your screenshot in the `src` directory and title it `image.png`
-3. Follow the rest of the steps.
+3. When running the `simulate.py` you will see a plot of your processed image. You can close out of this.
+4. Follow the remaining steps.
 
 ### Running the simulation
 1. Make sure your configurations are as you'd like them in the `settings.json` file.
 2. Go to `app/` and run `simulate.py`.
-3. You should see two sets of plots confirming your simulation before it runs. One of the procesed image of your screenshot, the other of your new grid with rivers and a place with started fire.
+3. You should see plots confirming your simulation. Once you close the plots, the simulation will run.
 4. Check for any inconsistencies that may cause errors in the simulation, for example if you've started a fire on top of a river.
 5. View your simulation in `results/fire_sim.gif`.
 

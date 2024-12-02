@@ -47,7 +47,7 @@ M = M + species/4
 # Fix any artifacting from adding varying densities to our grid.
 M[M < 0] = -1
 
-M, count_down = start_fire_at(M, count_down, (115, 80))             # use this to start a fire.
+M, count_down = start_fire_at(M, count_down, (60, 153))             # use this to start a fire.
 
 
 if settings['wind_direction'] == 'S':
@@ -135,7 +135,7 @@ def animate(frame):
         return [img]
 
 # Create animation
-N = 100  # Number of frames
+N = 500  # Number of frames
 anim = FuncAnimation(fig, animate, frames=N, interval=10, blit=True)
 plt.tight_layout()
 if settings['has_plane'] == True: plt.legend()
