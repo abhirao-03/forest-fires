@@ -94,6 +94,12 @@ Modify the `settings.json` file to control the simulation's behavior:
 3. When running the `simulate.py` you will see a plot of your processed image. You can close out of this.
 4. Follow the remaining steps.
 
+Here's an example of a good candidate:
+
+<p align="center">
+  <img width = 300px src="visualisations/image.png" />
+</p>
+
 ### Running the simulation
 1. Make sure your configurations are as you'd like them in the `settings.json` file.
 2. Go to `app/` and run `simulate.py`.
