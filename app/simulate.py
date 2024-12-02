@@ -8,48 +8,10 @@ import json
 with open('settings.json', 'r') as f:
   settings = json.load(f)
 
+# Pull in user set fire_probability
 p = settings['fire_probability']
 
-if settings['use_personal_image'] == True:
-    from image_processor import *
-    grid = np.load('results/processed.npy')
-
-elif settings['quality'] == "low":
-    grid = np.zeros(shape=(100, 100))
-
-elif settings['quality'] == "medium":
-    grid = np.zeros(shape=(200, 200))
-
-elif settings['quality'] == "high":
-    grid = np.zeros(shape=(300, 300))
-
-M, count_down = start_fire_grid(grid, p=p)                    # Generate a grid
-
-if settings['has_varying_densities'] == True:
-    # We provide 4 different densities with varying burn and growth rates.
-    species = generate_densities(shape=M.shape)
-    # species = np.load('real_world.npy') * 4                       # uncomment for real world
-
-else:
-    species = np.zeros(shape=M.shape)
-
-if settings['has_rain'] == True:
-    rain = generate_rain(shape=M.shape)
-else:
-    rain = np.zeros(shape=M.shape)
-
-
-burning_time = settings['burn_time']
-growing_time = settings['grow_time']
-
-M = M + species/4
-
-# Fix any artifacting from adding varying densities to our grid.
-M[M < 0] = -1
-
-M, count_down = start_fire_at(M, count_down, (60, 153))             # use this to start a fire.
-
-
+# Pull in user set wind_direction
 if settings['wind_direction'] == 'S':
     wind_dir = [0, -10]
 elif settings['wind_direction'] == 'N':
@@ -67,6 +29,51 @@ elif settings['wind_direction'] == 'NE':
 elif settings['wind_direction'] == 'SE':
     wind_dir = [-10, -10]
 
+# If the user specified a personal image then use image_processing to convert it into usable grid.
+if settings['use_personal_image'] == True:
+    from image_processor import *
+    grid = np.load('results/processed.npy')                     # It takes the quality from the set JSON.
+
+elif settings['quality'] == "low":
+    grid = np.zeros(shape=(100, 100))
+
+elif settings['quality'] == "medium":
+    grid = np.zeros(shape=(200, 200))
+
+elif settings['quality'] == "high":
+    grid = np.zeros(shape=(300, 300))
+
+M, count_down = start_fire_grid(grid, p=p)                    # Generate a grid
+
+# If the user specified varying densities, then create varying densities using Perlin noise.
+if settings['has_varying_densities'] == True:
+    # We provide 4 different densities with varying burn and growth rates.
+    species = generate_densities(shape=M.shape, seed=settings['density_seed'])
+    # species = np.load('real_world.npy') * 4                       # uncomment for real world
+else:
+    species = np.zeros(shape=M.shape)
+
+# If the user specified rain, then create rain using Perlin noise.
+if settings['has_rain'] == True:
+    rain = generate_rain(shape=M.shape)
+else:
+    rain = np.zeros(shape=M.shape)
+
+# Set the burn and growing time to be the user set list.
+burning_time = settings['burn_time']
+growing_time = settings['grow_time']
+
+M = M + species/4
+
+# Fix any artifacting from adding varying densities to our grid.
+M[M < 0] = -1
+
+# -----------------------------------------------------------------------------------------------------------------
+#  Now the model is ready. Here the user can specify a fire location using `start_fire_at()`
+# -----------------------------------------------------------------------------------------------------------------
+
+
+M, count_down = start_fire_at(M, count_down, (30, 66))             # use this to start a fire.
 
 
 # Uncomment below for real world fire start.
@@ -95,7 +102,7 @@ elif settings['wind_direction'] == 'SE':
 # M[84, 98] = 3
 # count_down[84, 98] = 2
 
-plt.figure(figsize=(10, 10))
+plt.figure(figsize=(6, 6))
 plt.imshow(M, cmap=cmap, norm=norm)
 plt.title('Initial Grid')
 plt.figtext(0.05, 0.05, "CHECK FOR ISSUES -- e.g. fire started over water")
@@ -127,15 +134,14 @@ def animate(frame):
     if settings['has_plane'] == True:
         alpha_responder.move(M)
         alpha_responder.extinguish(M)
-        responder_marker.set_data([[alpha_responder.y], [alpha_responder.x]]) # nested list prevents deprecation warning.
+        responder_marker.set_data([[alpha_responder.y], [alpha_responder.x]])   # nested list prevents deprecation warning.
 
         return [img, responder_marker]
     
     else:
         return [img]
 
-# Create animation
-N = settings['time_steps']  # Number of frames
+N = settings['time_steps']
 anim = FuncAnimation(fig, animate, frames=N, interval=10, blit=True)
 plt.tight_layout()
 if settings['has_plane'] == True: plt.legend()

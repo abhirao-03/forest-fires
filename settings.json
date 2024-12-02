@@ -2,18 +2,20 @@
     "use_personal_image": true,
     "image_path": "src/image.png",
     "quality": "low",
-    "time_steps": 100,
+    "time_steps": 50,
     
     "fire_probability": 0.0000001,
 
-    "has_plane": true,
+    "has_plane": false,
     "plane_speed": 8,
     "plane_radius": 4,
 
     "wind_direction": "NW",
+    
     "has_rain": false,
 
     "has_varying_densities": true,
-    "burn_time": [5, 3, 5, 7],
+    "density_seed": null,
+    "burn_time": [2, 3, 5, 7],
     "grow_time": [200, 225, 250, 275]
 }

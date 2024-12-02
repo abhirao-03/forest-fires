@@ -39,7 +39,7 @@ img_linear[img_linear > 0] = 255
 np.save('results/processed.npy', img_linear)
 imwrite('results/processed.png', img_linear)
 
-plt.figure(figsize=(10, 10))
+plt.figure(figsize=(6, 6))
 plt.imshow(img_linear)
 plt.title("Processed Image")
 plt.figtext(0.05, 0.05, "CHECK FOR ARTIFACTS!")

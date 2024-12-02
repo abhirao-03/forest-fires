@@ -10,8 +10,8 @@ from matplotlib.colors import ListedColormap, BoundaryNorm
 # JiaSun FUNCTIONS
 # -----------------------------------------------------------------------------------------------------------
 
-def generate_densities(shape:tuple):
-    noise = PerlinNoise(octaves=3, seed=3124)
+def generate_densities(shape:tuple, seed):
+    noise = PerlinNoise(octaves=3, seed=seed)
     xpix, ypix = shape
     pic = [[noise([i/xpix, j/ypix]) for j in range(xpix)] for i in range(ypix)]
     pic = np.array(pic)
